@@ -25,7 +25,7 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-        server-password: {{ secrets.PACKAGE_READONLY }}
+        server-password: ${{ secrets.PACKAGE_READONLY }}
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
