@@ -2,13 +2,15 @@ package tptp_parser;
 
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 import org.antlr.v4.runtime.tree.ParseTree;
-import java.util.HashMap;
+
+import java.util.Map;
 
 public class CNFVisitor extends AbstractParseTreeVisitor<String> {
 
     public static boolean debug = false;
 
-    /** ***************************************************************
+    /**
+     * **************************************************************
      * cnf_formula             : cnf_disjunction | '(' cnf_disjunction ')';
      */
     public static TPTPFormula visitCNFFormula(TptpParser.Cnf_formulaContext context) {
@@ -29,7 +31,8 @@ public class CNFVisitor extends AbstractParseTreeVisitor<String> {
         return f;
     }
 
-    /** ***************************************************************
+    /**
+     * **************************************************************
      * cnf_disjunction         : cnf_literal | cnf_disjunction Or cnf_literal;
      */
     public static TPTPFormula visitCnfDisjunction(TptpParser.Cnf_disjunctionContext context) {
@@ -49,8 +52,7 @@ public class CNFVisitor extends AbstractParseTreeVisitor<String> {
                 if (f.formula.equals("")) {
                     f.formula = newf.formula;
                     f.sumo = newf.sumo;
-                }
-                else {
+                } else {
                     f.formula = f.formula + "|" + newf.formula;
                     if (f.sumo.startsWith("(or"))
                         f.sumo = f.sumo + " " + newf.sumo + ")";
@@ -63,9 +65,10 @@ public class CNFVisitor extends AbstractParseTreeVisitor<String> {
         return f;
     }
 
-    /** ***************************************************************
+    /**
+     * **************************************************************
      * cnf_literal             : fof_atomic_formula | Not fof_atomic_formula
-     *                         | fof_infix_unary;
+     * | fof_infix_unary;
      */
     public static TPTPFormula visitCnfLiteral(TptpParser.Cnf_literalContext context) {
 
@@ -98,10 +101,11 @@ public class CNFVisitor extends AbstractParseTreeVisitor<String> {
         return f;
     }
 
-    /** ***************************************************************
+    /**
+     * **************************************************************
      * fof_atomic_formula          : fof_plain_atomic_formula
-     *                             | fof_defined_atomic_formula
-     *                             | fof_system_atomic_formula;
+     * | fof_defined_atomic_formula
+     * | fof_system_atomic_formula;
      */
     public static TPTPFormula visitFofAtomicFormula(TptpParser.Fof_atomic_formulaContext context) {
 
@@ -128,7 +132,8 @@ public class CNFVisitor extends AbstractParseTreeVisitor<String> {
         return f;
     }
 
-    /** ***************************************************************
+    /**
+     * **************************************************************
      * fof_plain_atomic_formula    : fof_plain_term;
      */
     public static TPTPFormula visitFofPlainAtomicFormula(TptpParser.Fof_plain_atomic_formulaContext context) {
@@ -149,9 +154,10 @@ public class CNFVisitor extends AbstractParseTreeVisitor<String> {
         return f;
     }
 
-    /** ***************************************************************
+    /**
+     * **************************************************************
      * fof_plain_term           : constant
-     *                         | functor '(' fof_arguments ')';
+     * | functor '(' fof_arguments ')';
      */
     public static TPTPFormula visitFofPlainTerm(TptpParser.Fof_plain_termContext context) {
 
@@ -181,7 +187,8 @@ public class CNFVisitor extends AbstractParseTreeVisitor<String> {
         return f;
     }
 
-    /** ***************************************************************
+    /**
+     * **************************************************************
      * fof_arguments           : fof_term (',' fof_term)*;
      */
     public static TPTPFormula visitFofArguments(TptpParser.Fof_argumentsContext context) {
@@ -198,8 +205,7 @@ public class CNFVisitor extends AbstractParseTreeVisitor<String> {
                 if (f.formula.equals("")) {
                     f.formula = newf.formula;
                     f.sumo = newf.sumo;
-                }
-                else {
+                } else {
                     f.formula = f.formula + "," + newf.formula;
                     f.sumo = f.sumo + " " + newf.sumo;
                 }
@@ -212,11 +218,12 @@ public class CNFVisitor extends AbstractParseTreeVisitor<String> {
         return f;
     }
 
-    /** ***************************************************************
+    /**
+     * **************************************************************
      * fof_term                : fof_function_term | variable
-     *                         | tff_conditional_term | tff_let_term
-     *                         | tff_tuple_term;
-     *
+     * | tff_conditional_term | tff_let_term
+     * | tff_tuple_term;
+     * <p>
      *                         TODO: ignoring tff for now, and forever unless used in TF0
      */
     public static TPTPFormula visitFofTerm(TptpParser.Fof_termContext context) {
@@ -245,9 +252,10 @@ public class CNFVisitor extends AbstractParseTreeVisitor<String> {
         return f;
     }
 
-    /** ***************************************************************
+    /**
+     * **************************************************************
      * fof_function_term       : fof_plain_term | fof_defined_term
-     *                         | fof_system_term;
+     * | fof_system_term;
      */
     public static TPTPFormula visitFunctionTerm(TptpParser.Fof_function_termContext context) {
 
@@ -275,9 +283,10 @@ public class CNFVisitor extends AbstractParseTreeVisitor<String> {
         return f;
     }
 
-    /** ***************************************************************
+    /**
+     * **************************************************************
      * fof_system_term         : system_constant
-     *                         | system_functor '(' fof_arguments ')';
+     * | system_functor '(' fof_arguments ')';
      */
     public static TPTPFormula visitFofSystemTerm(TptpParser.Fof_system_termContext context) {
 
@@ -311,7 +320,8 @@ public class CNFVisitor extends AbstractParseTreeVisitor<String> {
         return f;
     }
 
-    /** ***************************************************************
+    /**
+     * **************************************************************
      * fof_defined_atomic_formula  : fof_defined_plain_formula | fof_defined_infix_formula;
      */
     public static TPTPFormula visitFofDefinedAtomicFormula(TptpParser.Fof_defined_atomic_formulaContext context) {
@@ -336,7 +346,8 @@ public class CNFVisitor extends AbstractParseTreeVisitor<String> {
         return f;
     }
 
-    /** ***************************************************************
+    /**
+     * **************************************************************
      * fof_defined_infix_formula   : fof_term defined_infix_pred fof_term;
      */
     public static TPTPFormula visitFofDefinedInfixFormula(TptpParser.Fof_defined_infix_formulaContext context) {
@@ -358,8 +369,7 @@ public class CNFVisitor extends AbstractParseTreeVisitor<String> {
                 if (f.formula.equals("")) {
                     f.formula = term;
                     f.sumo = "(" + sumoIneq + " " + sumoTerm;
-                }
-                else {
+                } else {
                     f.formula = f.formula + ineq + term;
                     f.sumo = f.sumo + " " + sumoTerm + ")";
                 }
@@ -370,7 +380,8 @@ public class CNFVisitor extends AbstractParseTreeVisitor<String> {
         return f;
     }
 
-    /** ***************************************************************
+    /**
+     * **************************************************************
      * fof_defined_plain_formula   : fof_defined_term;
      */
     public static TPTPFormula visitFofDefinedPlainFormula(TptpParser.Fof_defined_plain_formulaContext context) {
@@ -392,7 +403,8 @@ public class CNFVisitor extends AbstractParseTreeVisitor<String> {
         return f;
     }
 
-    /** ***************************************************************
+    /**
+     * **************************************************************
      * fof_defined_term        : defined_term | fof_defined_atomic_term;
      */
     public static TPTPFormula visitFofDefinedTerm(TptpParser.Fof_defined_termContext context) {
@@ -420,7 +432,8 @@ public class CNFVisitor extends AbstractParseTreeVisitor<String> {
         return f;
     }
 
-    /** ***************************************************************
+    /**
+     * **************************************************************
      * fof_defined_atomic_term : fof_defined_plain_term;
      */
     public static TPTPFormula visitFofDefinedAtomicTerm(TptpParser.Fof_defined_atomic_termContext context) {
@@ -442,9 +455,10 @@ public class CNFVisitor extends AbstractParseTreeVisitor<String> {
         return f;
     }
 
-    /** ***************************************************************
+    /**
+     * **************************************************************
      * fof_defined_plain_term  : defined_constant
-     *                         | defined_functor '(' fof_arguments ')';
+     * | defined_functor '(' fof_arguments ')';
      */
     public static TPTPFormula visitFofDefinedPlainTerm(TptpParser.Fof_defined_plain_termContext context) {
 
@@ -479,7 +493,8 @@ public class CNFVisitor extends AbstractParseTreeVisitor<String> {
         return f;
     }
 
-    /** ***************************************************************
+    /**
+     * **************************************************************
      * fof_system_atomic_formula   : fof_system_term;
      */
     public static TPTPFormula visitFofSystemAtomicFormula(TptpParser.Fof_system_atomic_formulaContext context) {
@@ -504,7 +519,8 @@ public class CNFVisitor extends AbstractParseTreeVisitor<String> {
         return f;
     }
 
-    /** ***************************************************************
+    /**
+     * **************************************************************
      * fof_infix_unary             : fof_term Infix_inequality fof_term;
      */
     public static TPTPFormula visitFofInfixUnary(TptpParser.Fof_infix_unaryContext context) {
@@ -530,8 +546,7 @@ public class CNFVisitor extends AbstractParseTreeVisitor<String> {
                         f.sumo = "(not (equal " + sumoTerm;
                     else
                         f.sumo = "(" + sumoIneq + " " + sumoTerm;
-                }
-                else {
+                } else {
                     f.formula = f.formula + ineq + term;
                     if (ineq != null && ineq.equals("!="))
                         f.sumo = f.sumo + " " + sumoTerm + "))";
@@ -545,7 +560,8 @@ public class CNFVisitor extends AbstractParseTreeVisitor<String> {
         return f;
     }
 
-    /** ***************************************************************
+    /**
+     * **************************************************************
      */
     public static void showHelp() {
 
@@ -554,7 +570,8 @@ public class CNFVisitor extends AbstractParseTreeVisitor<String> {
         System.out.println("  -h - show this help screen");
     }
 
-    /** ***************************************************************
+    /**
+     * **************************************************************
      */
     public static void main(String[] args) {
 
@@ -569,7 +586,7 @@ public class CNFVisitor extends AbstractParseTreeVisitor<String> {
                 System.out.println("INFO in TPTPVisitor.main(): parse file: " + args[1]);
                 TPTPVisitor sv = new TPTPVisitor();
                 sv.parseFile(args[1]);
-                HashMap<String,TPTPFormula> hm = sv.result;
+                Map<String, TPTPFormula> hm = sv.result;
                 for (String s : hm.keySet()) {
                     TPTPFormula tf = hm.get(s);
                     if (tf.type.equals("cnf")) {
@@ -577,8 +594,7 @@ public class CNFVisitor extends AbstractParseTreeVisitor<String> {
                         CNFVisitor cv = new CNFVisitor();
                     }
                 }
-            }
-            else
+            } else
                 showHelp();
         }
     }

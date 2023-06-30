@@ -1,7 +1,10 @@
 // import ANTLR's runtime libraries
 package tptp_parser;
-import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.tree.*;
+
+import org.antlr.v4.runtime.CharStreams;
+import org.antlr.v4.runtime.CodePointCharStream;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.tree.ParseTree;
 
 public class SimpleTest {
 

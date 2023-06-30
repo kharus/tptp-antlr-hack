@@ -11,21 +11,20 @@ public class Main {
     public static void main(String[] args) throws IOException {
         Path inPath = Paths.get(args[0]);
         try (Stream<Path> paths = Files.walk(inPath)) {
-            paths.filter(f -> f.toString().endsWith(".p")).sorted().forEach( f ->  {
+            paths.filter(f -> f.toString().endsWith(".p")).sorted().forEach(f -> {
                 try {
                     String input = new String(Files.readAllBytes(f));
-                    ParseContext pc = ThfAstGen.parse(input,"tptp_file","nname");
-                    if (pc.error){
-                        System.out.println("ERR " + f.toString());
+                    ParseContext pc = ThfAstGen.parse(input, "tptp_file", "nname");
+                    if (pc.error) {
+                        System.out.println("ERR " + f);
                     } else {
                         //System.out.println("SUC " + f.toString());
                     }
                 } catch (IOException e) {
-                    System.out.println("EIO " + f.toString());
+                    System.out.println("EIO " + f);
                     e.printStackTrace();
-                }
-                catch (ParseException e) {
-                    System.out.println("Eparse" + f.toString());
+                } catch (ParseException e) {
+                    System.out.println("Eparse" + f);
                     e.printStackTrace();
                 }
             });
