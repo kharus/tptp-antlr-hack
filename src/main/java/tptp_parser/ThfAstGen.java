@@ -1,12 +1,12 @@
 package tptp_parser;
 
-import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.atn.PredictionMode;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
-
 import java.lang.reflect.InvocationTargetException;
-
 import java.lang.reflect.Method;
 import java.text.ParseException;
 
@@ -14,8 +14,9 @@ public class ThfAstGen {
 
     /**
      * parse ANTLRInputStream containing thf and return ast
+     *
      * @param inputStream ANTLRInputStream object
-     * @param rule start parsing at this rule
+     * @param rule        start parsing at this rule
      * @return ast
      * @throws ParseException if there is no such rule
      */
@@ -45,9 +46,9 @@ public class ThfAstGen {
             parserRuleContext = (ParserRuleContext) method.invoke(parser, (Object[]) null);
 
         } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException |
-                InvocationTargetException e) {
+                 InvocationTargetException e) {
             e.printStackTrace();
-            throw new ParseException(e.getMessage(),0);
+            throw new ParseException(e.getMessage(), 0);
         }        // the above or the below
 
         // create ast
@@ -63,13 +64,14 @@ public class ThfAstGen {
 
     /**
      * parse String containing thf and return ast
+     *
      * @param inputString String object
-     * @param rule start parsing at this rule
+     * @param rule        start parsing at this rule
      * @return ast
      * @throws ParseException if there is no such rule
      */
     public static ParseContext parse(String inputString, String rule, String name) throws ParseException {
-         return ThfAstGen.parse(new ANTLRInputStream(inputString), rule, name);
+        return ThfAstGen.parse(new ANTLRInputStream(inputString), rule, name);
     }
 
 }

@@ -8,7 +8,8 @@ public class THFVisitor extends AbstractParseTreeVisitor<String> {
 
     public static boolean debug = false;
 
-    /** ***************************************************************
+    /**
+     * **************************************************************
      * thf_formula : thf_logic_formula | thf_sequent;   // no use of thf_sequent for SUMO
      */
     public static TPTPFormula visitThfFormula(TptpParser.Thf_formulaContext context) {
@@ -25,9 +26,10 @@ public class THFVisitor extends AbstractParseTreeVisitor<String> {
         return f;
     }
 
-    /** ***************************************************************
+    /**
+     * **************************************************************
      * thf_logic_formula       : thf_binary_formula | thf_unitary_formula
-     *                         | thf_type_formula | thf_subtype;
+     * | thf_type_formula | thf_subtype;
      */
     public static TPTPFormula visitThfLogicFormula(TptpParser.Thf_logic_formulaContext context) {
 
@@ -54,7 +56,8 @@ public class THFVisitor extends AbstractParseTreeVisitor<String> {
     }
 
 
-    /** ***************************************************************
+    /**
+     * **************************************************************
      * thf_subtype             : thf_atom Subtype_sign thf_atom;
      */
     public static TPTPFormula visitThfSubtype(TptpParser.Thf_subtypeContext context) {
@@ -79,7 +82,8 @@ public class THFVisitor extends AbstractParseTreeVisitor<String> {
         return f;
     }
 
-    /** ***************************************************************
+    /**
+     * **************************************************************
      * thf_type_formula        : thf_typeable_formula ':' thf_top_level_type;
      */
     public static TPTPFormula visitThfTypeFormula(TptpParser.Thf_type_formulaContext context) {
@@ -100,7 +104,8 @@ public class THFVisitor extends AbstractParseTreeVisitor<String> {
         return f;
     }
 
-    /** ***************************************************************
+    /**
+     * **************************************************************
      * thf_typeable_formula    : thf_atom | '(' thf_logic_formula ')';
      */
     public static TPTPFormula visitThfTypeableFormula(TptpParser.Thf_typeable_formulaContext context) {
@@ -121,7 +126,8 @@ public class THFVisitor extends AbstractParseTreeVisitor<String> {
         return f;
     }
 
-    /** ***************************************************************
+    /**
+     * **************************************************************
      * thf_top_level_type      : thf_unitary_type | thf_mapping_type | thf_apply_type;
      */
     public static TPTPFormula visitThfTopLevelType(TptpParser.Thf_top_level_typeContext context) {
@@ -145,7 +151,8 @@ public class THFVisitor extends AbstractParseTreeVisitor<String> {
         return f;
     }
 
-    /** ***************************************************************
+    /**
+     * **************************************************************
      * thf_unitary_type        : thf_unitary_formula;
      */
     public static TPTPFormula visitThfUnitaryType(TptpParser.Thf_unitary_typeContext context) {
@@ -163,9 +170,10 @@ public class THFVisitor extends AbstractParseTreeVisitor<String> {
         return f;
     }
 
-    /** ***************************************************************
+    /**
+     * **************************************************************
      * thf_mapping_type        : thf_unitary_type Arrow thf_unitary_type
-     *                         | thf_unitary_type Arrow thf_mapping_type;
+     * | thf_unitary_type Arrow thf_mapping_type;
      */
     public static TPTPFormula visitThfMappingType(TptpParser.Thf_mapping_typeContext context) {
 
@@ -189,7 +197,8 @@ public class THFVisitor extends AbstractParseTreeVisitor<String> {
         return f;
     }
 
-    /** ***************************************************************
+    /**
+     * **************************************************************
      * thf_apply_type          : thf_apply_formula;
      */
     public static TPTPFormula visitThfApplyType(TptpParser.Thf_apply_typeContext context) {
@@ -207,9 +216,10 @@ public class THFVisitor extends AbstractParseTreeVisitor<String> {
         return f;
     }
 
-    /** ***************************************************************
+    /**
+     * **************************************************************
      * thf_apply_formula       : thf_unitary_formula App thf_unitary_formula
-     *                         | thf_apply_formula App thf_unitary_formula;
+     * | thf_apply_formula App thf_unitary_formula;
      */
     public static TPTPFormula visitThfApplyFormula(TptpParser.Thf_apply_formulaContext context) {
 
@@ -222,8 +232,7 @@ public class THFVisitor extends AbstractParseTreeVisitor<String> {
                 if (f.formula == null || f.formula.length() == 0) {
                     f.formula = newf.formula;
                     f.sumo = newf.sumo;
-                }
-                else {
+                } else {
                     f.formula = f.formula + " @ " + newf.formula;
                     f.sumo = f.sumo + " " + newf.sumo;
                 }
@@ -233,8 +242,7 @@ public class THFVisitor extends AbstractParseTreeVisitor<String> {
                 if (f.formula == null || f.formula.length() == 0) {
                     f.formula = newf.formula;
                     f.sumo = newf.sumo;
-                }
-                else {
+                } else {
                     f.formula = f.formula + " @ " + newf.formula;
                     f.sumo = f.sumo + " " + newf.sumo;
                 }
@@ -245,9 +253,10 @@ public class THFVisitor extends AbstractParseTreeVisitor<String> {
         return f;
     }
 
-    /** ***************************************************************
+    /**
+     * **************************************************************
      * thf_binary_formula      : thf_binary_pair | thf_binary_tuple
-     *                         | thf_binary_type;
+     * | thf_binary_type;
      */
     public static TPTPFormula visitThfBinaryFormula(TptpParser.Thf_binary_formulaContext context) {
 
@@ -262,16 +271,17 @@ public class THFVisitor extends AbstractParseTreeVisitor<String> {
             if (c.getClass().getName().equals("tptp_parser.TptpParser$Thf_binary_tupleContext")) {
                 f = visitThfBinaryTuple((TptpParser.Thf_binary_tupleContext) c);
             }
-         //   if (c.getClass().getName().equals("tptp_parser.TptpParser$Thf_binary_typeContext")) {
-         //       f = visitThfBinaryType((TptpParser.Thf_binary_typeContext) c);
-         //   }
+            //   if (c.getClass().getName().equals("tptp_parser.TptpParser$Thf_binary_typeContext")) {
+            //       f = visitThfBinaryType((TptpParser.Thf_binary_typeContext) c);
+            //   }
         }
         if (debug) System.out.println("visitThfBinaryFormula() returning: " + f);
         if (debug) System.out.println("visitThfBinaryFormula() returning sumo: " + f.sumo);
         return f;
     }
 
-    /** ***************************************************************
+    /**
+     * **************************************************************
      * thf_binary_pair         : thf_unitary_formula thf_pair_connective thf_unitary_formula;
      */
     public static TPTPFormula visitThfBinaryPair(TptpParser.Thf_binary_pairContext context) {
@@ -280,16 +290,15 @@ public class THFVisitor extends AbstractParseTreeVisitor<String> {
         TPTPFormula f = new TPTPFormula();
         for (ParseTree c : context.children) {
             if (debug) System.out.println("visitThfBinaryPair() child: " + c.getClass().getName());
-        //    if (c.getClass().getName().equals("tptp_parser.TptpParser$Thf_pair_connectiveContext")) {
-        //        f = visitThfPairConnective((TptpParser.Thf_pair_connectiveContext) c);
-        //    }
+            //    if (c.getClass().getName().equals("tptp_parser.TptpParser$Thf_pair_connectiveContext")) {
+            //        f = visitThfPairConnective((TptpParser.Thf_pair_connectiveContext) c);
+            //    }
             if (c.getClass().getName().equals("tptp_parser.TptpParser$Thf_unitary_formulaContext")) {
                 TPTPFormula newf = visitThfUnitaryFormula((TptpParser.Thf_unitary_formulaContext) c);
                 if (StringUtil.emptyString(f.formula)) {
                     f.formula = newf.formula;
                     f.sumo = newf.sumo;
-                }
-                else {
+                } else {
                     if (newf.sumo.startsWith("(and") || newf.sumo.startsWith("(or"))
                         f.formula = f.formula + " (" + newf.formula + ")";
                     else
@@ -315,9 +324,10 @@ public class THFVisitor extends AbstractParseTreeVisitor<String> {
         return f;
     }
 
-    /** ***************************************************************
+    /**
+     * **************************************************************
      * thf_binary_tuple        : thf_or_formula | thf_and_formula
-     *                         | thf_apply_formula;
+     * | thf_apply_formula;
      */
     public static TPTPFormula visitThfBinaryTuple(TptpParser.Thf_binary_tupleContext context) {
 
@@ -325,9 +335,9 @@ public class THFVisitor extends AbstractParseTreeVisitor<String> {
         TPTPFormula f = new TPTPFormula();
         for (ParseTree c : context.children) {
             if (debug) System.out.println("visitThfBinaryTuple() child: " + c.getClass().getName());
-                if (c.getClass().getName().equals("tptp_parser.TptpParser$Thf_or_formulaContext")) {
-                    f = visitThfOrFormula((TptpParser.Thf_or_formulaContext) c);
-                }
+            if (c.getClass().getName().equals("tptp_parser.TptpParser$Thf_or_formulaContext")) {
+                f = visitThfOrFormula((TptpParser.Thf_or_formulaContext) c);
+            }
             if (c.getClass().getName().equals("tptp_parser.TptpParser$Thf_and_formulaContext")) {
                 f = visitThfAndFormula((TptpParser.Thf_and_formulaContext) c);
             }
@@ -342,10 +352,11 @@ public class THFVisitor extends AbstractParseTreeVisitor<String> {
     }
 
 
-    /** ***************************************************************
+    /**
+     * **************************************************************
      * thf_unitary_formula     : thf_quantified_formula | thf_unary_formula
-     *                         | thf_atom | thf_conditional | thf_let
-     *                         | thf_tuple | '(' thf_logic_formula ')';  // let and tuple not used in SUMO
+     * | thf_atom | thf_conditional | thf_let
+     * | thf_tuple | '(' thf_logic_formula ')';  // let and tuple not used in SUMO
      */
     public static TPTPFormula visitThfUnitaryFormula(TptpParser.Thf_unitary_formulaContext context) {
 
@@ -370,9 +381,9 @@ public class THFVisitor extends AbstractParseTreeVisitor<String> {
             if (c.getClass().getName().equals("tptp_parser.TptpParser$Thf_atomContext")) {
                 f = visitThfAtom((TptpParser.Thf_atomContext) c);
             }
-       //     if (c.getClass().getName().equals("tptp_parser.TptpParser$Thf_conditionalContext")) {
-       //         f = visitThfConditional((TptpParser.Thf_conditionalContext) c);
-       //     }
+            //     if (c.getClass().getName().equals("tptp_parser.TptpParser$Thf_conditionalContext")) {
+            //         f = visitThfConditional((TptpParser.Thf_conditionalContext) c);
+            //     }
             if (c.getClass().getName().equals("tptp_parser.TptpParser$Thf_logic_formulaContext")) {
                 f = visitThfLogicFormula((TptpParser.Thf_logic_formulaContext) c);
                 if (f.sumo.trim().startsWith("("))
@@ -390,9 +401,10 @@ public class THFVisitor extends AbstractParseTreeVisitor<String> {
         return f;
     }
 
-    /** ***************************************************************
+    /**
+     * **************************************************************
      * thf_or_formula          : thf_unitary_formula Or thf_unitary_formula
-     *                         | thf_or_formula Or thf_unitary_formula;
+     * | thf_or_formula Or thf_unitary_formula;
      */
     public static TPTPFormula visitThfOrFormula(TptpParser.Thf_or_formulaContext context) {
 
@@ -404,15 +416,14 @@ public class THFVisitor extends AbstractParseTreeVisitor<String> {
             if (c.getClass().getName().equals("tptp_parser.TptpParser$Thf_unitary_formulaContext")) {
                 TPTPFormula newf = visitThfUnitaryFormula((TptpParser.Thf_unitary_formulaContext) c);
                 if (newf.sumo.startsWith("(or")) {
-                    int start = newf.sumo.indexOf("(",2);
+                    int start = newf.sumo.indexOf("(", 2);
                     int end = newf.sumo.trim().length() - 1;
-                    newf.sumo = newf.sumo.substring(start,end);
+                    newf.sumo = newf.sumo.substring(start, end);
                 }
                 if (f.formula.equals("")) {
                     f.formula = newf.formula;
                     f.sumo = newf.sumo;
-                }
-                else {
+                } else {
                     f.formula = f.formula + " | " + newf.formula;
                     if (f.sumo.startsWith("(or"))
                         f.sumo = f.sumo + " " + newf.sumo;
@@ -423,15 +434,14 @@ public class THFVisitor extends AbstractParseTreeVisitor<String> {
             if (c.getClass().getName().equals("tptp_parser.TptpParser$Thf_or_formulaContext")) {
                 TPTPFormula newf = visitThfOrFormula((TptpParser.Thf_or_formulaContext) c);
                 if (newf.sumo.startsWith("(or")) {
-                    int start = newf.sumo.indexOf("(",2);
+                    int start = newf.sumo.indexOf("(", 2);
                     int end = newf.sumo.trim().length() - 1;
-                    newf.sumo = newf.sumo.substring(start,end);
+                    newf.sumo = newf.sumo.substring(start, end);
                 }
                 if (f.formula.equals("")) {
                     f.formula = newf.formula;
                     f.sumo = newf.sumo;
-                }
-                else {
+                } else {
                     f.formula = f.formula + " | " + newf.formula;
                     if (f.sumo.startsWith("(or"))
                         f.sumo = f.sumo + " " + newf.sumo;
@@ -445,9 +455,10 @@ public class THFVisitor extends AbstractParseTreeVisitor<String> {
         return f;
     }
 
-    /** ***************************************************************
+    /**
+     * **************************************************************
      * thf_and_formula         : thf_unitary_formula And thf_unitary_formula
-     *                         | thf_and_formula And thf_unitary_formula;
+     * | thf_and_formula And thf_unitary_formula;
      */
     public static TPTPFormula visitThfAndFormula(TptpParser.Thf_and_formulaContext context) {
 
@@ -459,15 +470,14 @@ public class THFVisitor extends AbstractParseTreeVisitor<String> {
             if (c.getClass().getName().equals("tptp_parser.TptpParser$Thf_unitary_formulaContext")) {
                 TPTPFormula newf = visitThfUnitaryFormula((TptpParser.Thf_unitary_formulaContext) c);
                 if (newf.sumo.startsWith("(and")) {
-                    int start = newf.sumo.indexOf("(",2);
+                    int start = newf.sumo.indexOf("(", 2);
                     int end = newf.sumo.trim().length() - 1;
-                    newf.sumo = newf.sumo.substring(start,end);
+                    newf.sumo = newf.sumo.substring(start, end);
                 }
                 if (f.formula.equals("")) {
                     f.formula = newf.formula;
                     f.sumo = newf.sumo;
-                }
-                else {
+                } else {
                     f.formula = f.formula + " & " + newf.formula;
                     if (f.sumo.startsWith("(and"))
                         f.sumo = f.sumo + " " + newf.sumo;
@@ -478,15 +488,14 @@ public class THFVisitor extends AbstractParseTreeVisitor<String> {
             if (c.getClass().getName().equals("tptp_parser.TptpParser$Thf_and_formulaContext")) {
                 TPTPFormula newf = visitThfAndFormula((TptpParser.Thf_and_formulaContext) c);
                 if (newf.sumo.startsWith("(and")) {
-                    int start = newf.sumo.indexOf("(",2);
+                    int start = newf.sumo.indexOf("(", 2);
                     int end = newf.sumo.trim().length() - 1;
-                    newf.sumo = newf.sumo.substring(start,end);
+                    newf.sumo = newf.sumo.substring(start, end);
                 }
                 if (f.formula.equals("")) {
                     f.formula = newf.formula;
                     f.sumo = newf.sumo;
-                }
-                else {
+                } else {
                     f.formula = f.formula + " & " + newf.formula;
                     if (f.sumo.startsWith("(and"))
                         f.sumo = f.sumo + " " + newf.sumo;
@@ -500,7 +509,8 @@ public class THFVisitor extends AbstractParseTreeVisitor<String> {
         return f;
     }
 
-    /** ***************************************************************
+    /**
+     * **************************************************************
      * thf_unary_formula       : thf_unary_connective '(' thf_logic_formula ')';
      */
     public static TPTPFormula visitThfUnaryFormula(TptpParser.Thf_unary_formulaContext context) {
@@ -523,7 +533,8 @@ public class THFVisitor extends AbstractParseTreeVisitor<String> {
         return f;
     }
 
-    /** ***************************************************************
+    /**
+     * **************************************************************
      * thf_unary_connective    : unary_connective | th1_unary_connective; // th1... not used in SUMO
      */
     public static TPTPFormula visitThfUnaryConnective(TptpParser.Thf_unary_connectiveContext context) {
@@ -542,9 +553,10 @@ public class THFVisitor extends AbstractParseTreeVisitor<String> {
         return f;
     }
 
-    /** ***************************************************************
+    /**
+     * **************************************************************
      * thf_atom                : thf_function | variable | defined_term
-     *                         | thf_conn_term;
+     * | thf_conn_term;
      */
     public static TPTPFormula visitThfAtom(TptpParser.Thf_atomContext context) {
 
@@ -565,22 +577,23 @@ public class THFVisitor extends AbstractParseTreeVisitor<String> {
                 f.formula = term;
                 f.sumo = sumoTerm;
             }
-          //  if (c.getClass().getName().equals("tptp_parser.TptpParser$DefinedTermContext")) {
-          //      f = visitDefinedTerm((TptpParser.Defined_termContext) c);
-          //  }
-          //  if (c.getClass().getName().equals("tptp_parser.TptpParser$Thf_conn_termContext")) {
-          //      f = visitThfConnTerm((TptpParser.Thf_conn_termContext) c);
-          //  }
+            //  if (c.getClass().getName().equals("tptp_parser.TptpParser$DefinedTermContext")) {
+            //      f = visitDefinedTerm((TptpParser.Defined_termContext) c);
+            //  }
+            //  if (c.getClass().getName().equals("tptp_parser.TptpParser$Thf_conn_termContext")) {
+            //      f = visitThfConnTerm((TptpParser.Thf_conn_termContext) c);
+            //  }
         }
         if (debug) System.out.println("visitThfAtom() returning: " + f);
         if (debug) System.out.println("visitThfAtom() returning sumo: " + f.sumo);
         return f;
     }
 
-    /** ***************************************************************
+    /**
+     * **************************************************************
      * thf_function            : atom | functor '(' thf_arguments ')'
-     *                         | defined_functor '(' thf_arguments ')'
-     *                         | system_functor '(' thf_arguments ')';
+     * | defined_functor '(' thf_arguments ')'
+     * | system_functor '(' thf_arguments ')';
      */
     public static TPTPFormula visitThfFunction(TptpParser.Thf_functionContext context) {
 
@@ -626,7 +639,8 @@ public class THFVisitor extends AbstractParseTreeVisitor<String> {
         return f;
     }
 
-    /** ***************************************************************
+    /**
+     * **************************************************************
      * thf_arguments           : thf_formula_list;
      */
     public static TPTPFormula visitThfArguments(TptpParser.Thf_argumentsContext context) {
@@ -647,7 +661,8 @@ public class THFVisitor extends AbstractParseTreeVisitor<String> {
         return f;
     }
 
-    /** ***************************************************************
+    /**
+     * **************************************************************
      * thf_formula_list        : thf_logic_formula (',' thf_logic_formula)*;
      */
     public static TPTPFormula visitThfFormulaList(TptpParser.Thf_formula_listContext context) {
@@ -663,9 +678,8 @@ public class THFVisitor extends AbstractParseTreeVisitor<String> {
                 TPTPFormula newf = THFVisitor.visitThfLogicFormula((TptpParser.Thf_logic_formulaContext) c);
                 if (f.formula == null || f.formula.length() == 0) {
                     f.formula = f.formula + "," + newf.formula;
-                    f.sumo =  f.sumo + " " + newf.sumo;
-                }
-                else {
+                    f.sumo = f.sumo + " " + newf.sumo;
+                } else {
                     f.formula = newf.formula;
                     f.sumo = newf.sumo;
                 }
@@ -676,7 +690,8 @@ public class THFVisitor extends AbstractParseTreeVisitor<String> {
         return f;
     }
 
-    /** ***************************************************************
+    /**
+     * **************************************************************
      * atom                    : untyped_atom | defined_constant;
      */
     public static TPTPFormula visitAtom(TptpParser.AtomContext context) {
@@ -704,7 +719,8 @@ public class THFVisitor extends AbstractParseTreeVisitor<String> {
         return f;
     }
 
-    /** ***************************************************************
+    /**
+     * **************************************************************
      * untyped_atom            : constant | system_constant;
      */
     public static TPTPFormula visitUntypedAtom(TptpParser.Untyped_atomContext context) {
@@ -736,7 +752,8 @@ public class THFVisitor extends AbstractParseTreeVisitor<String> {
         return f;
     }
 
-    /** ***************************************************************
+    /**
+     * **************************************************************
      * thf_quantified_formula  : thf_quantification thf_unitary_formula;
      */
     public static TPTPFormula visitThfQuantifiedFormula(TptpParser.Thf_quantified_formulaContext context) {
@@ -759,7 +776,8 @@ public class THFVisitor extends AbstractParseTreeVisitor<String> {
         return f;
     }
 
-    /** ***************************************************************
+    /**
+     * **************************************************************
      * thf_quantification      : thf_quantifier '[' thf_variable_list ']' ':';
      */
     public static TPTPFormula visitThfQuantification(TptpParser.Thf_quantificationContext context) {
@@ -786,7 +804,8 @@ public class THFVisitor extends AbstractParseTreeVisitor<String> {
         return f;
     }
 
-    /** ***************************************************************
+    /**
+     * **************************************************************
      * thf_variable_list       : thf_variable (',' thf_variable)*;
      */
     public static TPTPFormula visitThfVariableList(TptpParser.Thf_variable_listContext context) {
@@ -809,7 +828,8 @@ public class THFVisitor extends AbstractParseTreeVisitor<String> {
         return f;
     }
 
-    /** ***************************************************************
+    /**
+     * **************************************************************
      * thf_variable            : thf_typed_variable | variable;
      */
     public static TPTPFormula visitThfVariable(TptpParser.Thf_variableContext context) {
@@ -834,7 +854,8 @@ public class THFVisitor extends AbstractParseTreeVisitor<String> {
         return f;
     }
 
-    /** ***************************************************************
+    /**
+     * **************************************************************
      * thf_typed_variable      : variable ':' thf_top_level_type;
      */
     public static TPTPFormula visitThfTypedVariable(TptpParser.Thf_typed_variableContext context) {
@@ -844,9 +865,10 @@ public class THFVisitor extends AbstractParseTreeVisitor<String> {
         for (ParseTree c : context.children) {
             if (debug) System.out.println("visitThfTypedVariable() child: " + c.getClass().getName());
             if (c.getClass().getName().equals("tptp_parser.TptpParser$Thf_top_level_typeContext")) {
-                if (debug) System.out.println("visitThfTypedVariable() type: " + ((TptpParser.Thf_top_level_typeContext) c).getText());
+                if (debug)
+                    System.out.println("visitThfTypedVariable() type: " + c.getText());
                 if (debug) System.out.println("visitThfTypedVariable() formula: " + f.formula);
-                f.formula = f.formula + " : " + ((TptpParser.Thf_top_level_typeContext) c).getText();
+                f.formula = f.formula + " : " + c.getText();
             }
             if (c.getClass().getName().equals("tptp_parser.TptpParser$VariableContext") ||
                     c.getClass().getName().equals("org.antlr.v4.runtime.tree.TerminalNodeImpl")) {
