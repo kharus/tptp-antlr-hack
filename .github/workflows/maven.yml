@@ -26,6 +26,9 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
+        server-id: packagecloud-kharus
+        server-password: PACKAGECLOUD_TOKEN
+
     - name: Build with Maven
       run: |
         cat /home/runner/.m2/settings.xml
@@ -38,6 +41,7 @@ jobs:
       run: mvn -B deploy
       env:
         GITHUB_TOKEN: ${{ github.token }}
+        PACKAGECLOUD_TOKEN: ${{ secrets.PACKAGECLOUD_TOKEN }}
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph
