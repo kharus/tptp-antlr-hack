@@ -26,14 +26,7 @@
         </repository>
         <repository>
             <id>packagecloud</id>
-            <url>https://packagecloud.io/kharus/sigma</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>github</id>
-            <url>https://maven.pkg.github.com/kharus/hack-sigma-utils</url>
+            <url>https://packagecloud.io/kharus/sigma/maven2</url>
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
@@ -53,7 +46,7 @@
         <dependency>
             <groupId>com.kharu5</groupId>
             <artifactId>hack-sigma-utils</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
