@@ -4,10 +4,10 @@
 
     <groupId>com.kharu5</groupId>
     <artifactId>tptp-grammar-hack</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
     <scm>
         <developerConnection>scm:git:https://github.com/kharus/tptp-antlr-hack.git</developerConnection>
-        <tag>tptp-grammar-hack-1.0.0</tag>
+        <tag>HEAD</tag>
     </scm>
     <distributionManagement>
         <repository>
